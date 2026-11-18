@@ -1,0 +1,19 @@
+{
+  "model": "DecisionTree",
+  "family": "Tree",
+  "config": "max_depth=12, min_leaf=50, balanced",
+  "cv_macro_f1_mean": 0.9328268688362937,
+  "cv_macro_f1_std": 0.01681480622948802,
+  "cv_top1_mean": 0.8768081330411428,
+  "train_macro_f1": 0.9469460997905833,
+  "train_top1": 0.9031261817723434,
+  "test_top1": 0.8808964112208117,
+  "test_macro_f1": 0.9336634185824879,
+  "test_precision_macro": 0.9335433393236896,
+  "test_recall_macro": 0.9337835857769481,
+  "test_log_loss": 0.07684757247233794,
+  "test_candidate_miss_rate": 0.0006268609935746748,
+  "test_route_continuity": 0.9210619116420145,
+  "train_time_s": 7.0691237449646,
+  "infer_ms_per_1k_points": 0.5827636073103072
+}
