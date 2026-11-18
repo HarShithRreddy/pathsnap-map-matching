@@ -1,0 +1,3 @@
+partition,trips,total_points,median_points,total_km,missing,gaps_gt_10s,median_pct_dt_1s,median_nodes,median_arcs,isolated_nodes,trips_multi_wcc,median_route_arcs
+student_test,10,19160,1420.0,296.97,0,27,99.93,6596.5,13145.0,0,10,250.0
+train,80,208417,1529.0,2978.42,0,590,99.1,9608.0,19526.5,0,79,280.0
