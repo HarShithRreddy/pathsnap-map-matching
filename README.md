@@ -6,13 +6,15 @@ served by **FastAPI** (Laptop 1) and shown in a **Streamlit** evaluator UI (Lapt
 
 ## Repository layout and owners
 
+Team: **P1** Harshith R Reddy · **P2** Harshith Manish · **P3** Harshith · **P4** Heemadhawala
+
 | Folder | Contents | Owner |
 |---|---|---|
 | `data_processing/` | Loading, cleaning, UTM projection, label alignment, candidate generation, features | P1 |
-| `eda/` | Inventory, data-quality tables, plots, Folium maps | P1 |
-| `models/` | `common.py` shared harness (P1), one script per model family (P1–P4), `compare.py` (P4) | All |
-| `tuning/` | Optuna (TPE) Bayesian hyperparameter optimisation | P2 |
-| `hmm/` | Road graph, transition model, Viterbi decoder, end-to-end `predict_trip` | P3 |
+| `eda/` | Inventory, data-quality tables, plots, Folium maps (`eda.py`), predicted-route maps (`predicted_maps.py`) | P1 |
+| `models/` | `common.py` + DecisionTree (P1), LightGBM + HistGB (P2), RandomForest (P3), MLP + `compare.py` (P4) | All |
+| `tuning/` | Optuna (TPE) Bayesian hyperparameter optimisation of LightGBM | P2 |
+| `hmm/` | Road graph, transition model, Viterbi decoder, route gap filling, end-to-end `predict_trip` | P3 |
 | `evaluation/` | Shared metrics, classifier-only vs HMM comparison, decoder tuning | P3 |
 | `api/` | FastAPI backend | P4 |
 | `ui/` | Streamlit evaluator interface | P4 |
@@ -42,6 +44,7 @@ python -m models.compare                     # merged table + charts -> results/
 python -m tuning.optuna_tune 30             # Bayesian optimisation -> results/tuning/, artifacts/
 python -m evaluation.evaluate_hmm tune      # decoder beta/emission weight on TRAIN trips
 python -m evaluation.evaluate_hmm           # classifier-only vs +HMM on student-test -> results/hmm/
+python -m eda.predicted_maps                # predicted vs reference Folium maps -> results/maps/
 ```
 
 ## Two-laptop deployment
@@ -77,6 +80,16 @@ traffic between devices. Check with `curl http://<LAPTOP1_IP>:8000/health` from 
 6. **HMM**: states = candidate arcs; emission = classifier probability;
    transition = exp(-|network distance - GPS straight-line distance| / beta) (Newson & Krumm);
    the chain restarts on gaps > 60 s, on points with no candidates, and on disconnected steps.
+7. **Route output**: consecutive decoded arcs that are not adjacent (a car can cross several short
+   arcs between two 1 Hz fixes) are joined by the shortest network path, giving a connected route.
+
+## API
+
+| Endpoint | Returns |
+|---|---|
+| `GET /health` | status, loaded model, trips folder |
+| `GET /trips` | trip ids in `PATHSNAP_TRIPS_DIR` |
+| `POST /predict/{trip_id}` | predicted arc ids + route geometry, GPS points, decoder stats, timing, and server-side metrics (Top-1, route precision/recall/F1, continuity for classifier-only and +HMM) |
 
 ## Data-leakage controls
 - Cross-validation uses GroupKFold by `trip_id`.
@@ -85,6 +98,6 @@ traffic between devices. Check with `curl http://<LAPTOP1_IP>:8000/health` from 
   `api/app.py::server_side_score` after prediction, and only metrics are returned to the UI.
 
 ## AI assistance disclosure
-Parts of this code were drafted with AI assistance (Claude). All experiments were run by the team,
+An AI coding assistant was used to help draft parts of the code. All experiments were run by the team,
 all reported numbers come from the scripts and logs in this repository, and each owner has
 reviewed and can explain their component.
