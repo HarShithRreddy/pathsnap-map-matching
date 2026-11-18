@@ -1,0 +1,49 @@
+nearest-arc baseline: {'test_top1': 0.5468317400616414, 'test_macro_f1': 0.747110015695509, 'route_continuity': 0.8054371365346217}
+
+=== DecisionTree  (train rows 535114, trips 80 | test rows 183375)
+  fold 0: macroF1=0.9395 top1=0.8948
+  fold 1: macroF1=0.9590 top1=0.9268
+  fold 2: macroF1=0.9073 top1=0.8238
+  fold 3: macroF1=0.9312 top1=0.8664
+  fold 4: macroF1=0.9271 top1=0.8721
+  TEST top1=0.8809 macroF1=0.9337 logloss=0.0768 cont=0.9211 | train top1=0.9031 | fit 7.1s
+
+=== HistGradientBoosting  (train rows 535114, trips 80 | test rows 183375)
+  fold 0: macroF1=0.9372 top1=0.8909
+  fold 1: macroF1=0.9592 top1=0.9271
+  fold 2: macroF1=0.9073 top1=0.8237
+  fold 3: macroF1=0.9309 top1=0.8660
+  fold 4: macroF1=0.9307 top1=0.8783
+  TEST top1=0.8865 macroF1=0.9368 logloss=0.0546 cont=0.9080 | train top1=0.9228 | fit 7.3s
+
+=== LightGBM  (train rows 535114, trips 80 | test rows 183375)
+  fold 0: macroF1=0.9437 top1=0.9021
+  fold 1: macroF1=0.9645 top1=0.9366
+  fold 2: macroF1=0.9161 top1=0.8394
+  fold 3: macroF1=0.9380 top1=0.8785
+  fold 4: macroF1=0.9356 top1=0.8868
+  TEST top1=0.9011 macroF1=0.9449 logloss=0.0494 cont=0.9319 | train top1=0.9453 | fit 8.1s
+
+=== MLP  (train rows 535114, trips 80 | test rows 183375)
+  fold 0: macroF1=0.9410 top1=0.8974
+  fold 1: macroF1=0.9591 top1=0.9271
+  fold 2: macroF1=0.9072 top1=0.8237
+  fold 3: macroF1=0.9340 top1=0.8714
+  fold 4: macroF1=0.9308 top1=0.8785
+  TEST top1=0.8917 macroF1=0.9397 logloss=0.0552 cont=0.9282 | train top1=0.9137 | fit 21.9s
+
+=== RandomForest  (train rows 535114, trips 80 | test rows 183375)
+  fold 0: macroF1=0.9432 top1=0.9012
+  fold 1: macroF1=0.9624 top1=0.9329
+  fold 2: macroF1=0.9122 top1=0.8326
+  fold 3: macroF1=0.9342 top1=0.8717
+  fold 4: macroF1=0.9343 top1=0.8845
+  TEST top1=0.8871 macroF1=0.9371 logloss=0.0590 cont=0.9257 | train top1=0.9399 | fit 99.1s
+               model  cv_macro_f1_mean  cv_macro_f1_std  train_macro_f1  test_top1  test_macro_f1  test_log_loss  test_route_continuity  train_time_s
+        DecisionTree            0.9328           0.0168          0.9469     0.8809         0.9337         0.0768                 0.9211        7.0691
+        RandomForest            0.9373           0.0162          0.9684     0.8871         0.9371         0.0590                 0.9257       99.1242
+HistGradientBoosting            0.9331           0.0166          0.9584     0.8865         0.9368         0.0546                 0.9080        7.3000
+            LightGBM            0.9396           0.0155          0.9716     0.9011         0.9449         0.0494                 0.9319        8.0997
+                 MLP            0.9344           0.0168          0.9531     0.8917         0.9397         0.0552                 0.9282       21.9122
+
+Selected by CV macro F1: LightGBM
