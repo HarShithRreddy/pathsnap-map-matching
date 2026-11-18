@@ -68,6 +68,11 @@ def server_side_score(trip_dir, clf_arcs, hmm_arcs, hmm_route):
     return out
 
 
+@app.get("/")
+def root():
+    return {"service": "PathSnap map-matching API",
+            "endpoints": ["GET /health", "GET /trips", "POST /predict/{trip_id}", "GET /docs"]}
+
 @app.get("/health")
 def health():
     return {"status": "ok", "model": CFG.get("model", type(MODEL).__name__), "trips_dir": TRIPS_DIR}
