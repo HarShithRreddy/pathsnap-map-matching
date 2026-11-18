@@ -1,0 +1,18 @@
+{
+  "n_trials": 30,
+  "optimisation_time_s": 950.2633693218231,
+  "best_cv_macro_f1": 0.9389752947625761,
+  "best_params": {
+    "n_estimators": 650,
+    "learning_rate": 0.055498321967705766,
+    "num_leaves": 25,
+    "min_child_samples": 10,
+    "subsample": 0.9997953099321123,
+    "colsample_bytree": 0.6213804740888547,
+    "reg_lambda": 0.0038739613455727223,
+    "reg_alpha": 0.5429736273359422,
+    "subsample_freq": 1
+  },
+  "sampler": "TPE",
+  "cv": "GroupKFold(3) by trip"
+}
